@@ -48,7 +48,6 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        //logged in ...
         console.log(authUser);
         setUser(authUser);
       } else {
@@ -171,7 +170,7 @@ function App() {
         )
       }
       
-      <h1>Welcome to FishID.com!</h1>
+      <h1>Welcome { user.displayName } to FishID.com!</h1>
 
       {
         posts.map(({id, post}) => (
