@@ -3,6 +3,7 @@
 }
 .app {
   background-color: rgba(49, 135, 248, 0.246);
+
 }
 
 .app_headerImage {
@@ -12,6 +13,12 @@
   object-fit: contain;
   /* margin: 20px; */
   /*keep aspect ration */
+}
+
+.app_signup{
+  display:flex;
+  text-align: center;
+  flex-direction: column;
 }
 
 /* .App {

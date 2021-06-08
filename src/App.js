@@ -4,10 +4,9 @@ import Post from './Post';
 // import VinnyCarp from './images/VinnyCarp.jpg';
 // import JoeCarp from './images/JoeCarp.JPG'
 // import carpface from './images/carpface.JPG'
-import {db} from './firebase';
+import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
-import { Modal } from '@material-ui/core';
-import { Button } from '@material-ui/core';
+import { Modal, Button, Input } from '@material-ui/core';
 
 // function rand() {
 //   return Math.round(Math.random() * 20) - 10;
@@ -37,14 +36,30 @@ const useStyles = makeStyles((theme) => ({
 
 function App() { 
   const classes = useStyles()
-  const [modalStyle] = useState(getModalStyle)
+  const [ modalStyle ] = useState(getModalStyle)
   const [ posts, setPosts ] = useState([]);
+  const [openSignIn, setOpenSignIn ] = useState(false)
   const [ open, setOpen ] = useState(false);
-  
-  // const signUp = (e) => {
-  //   e.preventDefault()
+  const [ email, setEmail ] = useState('');
+  const [ username, setUsername ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [user, setUser ] = useState(null);
 
-  // }
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        //logged in ...
+        console.log(authUser);
+        setUser(authUser);
+      } else {
+        setUser(null)
+      }
+    })
+    return () => {
+      unsubscribe();
+    }
+
+  }, [user, username])
 
   useEffect(() => {
     db.collection('posts').onSnapshot(snapshot => {
@@ -56,7 +71,23 @@ function App() {
   },[]);
 
   const signUp = (event) => {
-    event.preventDefault()
+    event.preventDefault();
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        return authUser.user.updateProfile({
+          displayName: username
+        })
+      })
+      .catch((error) => alert(error.message));
+      setOpen(false);
+  }
+
+  const signIn = (event) => {
+    event.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => alert(error.message))
+      setOpenSignIn(false);
   }
 
   return (
@@ -65,8 +96,64 @@ function App() {
         open={open}
         onClose={() => setOpen(false)}
       >
-        <div style={modalStyle} classname={classes.paper}>
-          <h2>I am a modal.</h2>
+        <div style={modalStyle} className={classes.paper}>
+          <form className='app_signup'>
+            <center>
+              <img 
+                className="app_headerImage"
+                src=""
+                alt="Logo Goes Here... hmmm... Now, where did I put that darn logo?"
+              />
+            </center>
+            <Input
+              placeholder = "email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder = "username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder = "password"
+              type="text"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={(event) => signUp(event)}>Sign Up</Button>
+          </form>
+        </div>
+      </Modal>
+      <Modal
+        open={openSignIn}
+        onClose={() => setOpenSignIn(false)}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <form className='app_signup'>
+            <center>
+              <img 
+                className="app_headerImage"
+                src=""
+                alt="Logo Goes Here... hmmm... Now, where did I put that darn logo?"
+              />
+            </center>
+            <Input
+              placeholder = "email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder = "password"
+              type="text"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={(event) => signIn(event)}> press me </Button>
+          </form>
         </div>
       </Modal>
       <div classname='app_header' >
@@ -74,9 +161,16 @@ function App() {
           src=""
           alt="Logo Will Go Here." />
       </div>
+      { user ? (
+        <Button onClick={() => auth.signOut()}>Logout</Button>
+        ) : (
+        <div className="app_loginContainer">
+          <Button onClick={()=> setOpenSignIn(true)}>Log In</Button>
+          <Button onClick={()=> setOpen(true)}>Sign Up</Button>
+        </div>    
+        )
+      }
       
-      <Button onClick={()=> setOpen(true)}>Sign Up</Button>
-
       <h1>Welcome to FishID.com!</h1>
 
       {
