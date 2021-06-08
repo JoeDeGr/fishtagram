@@ -1,4 +1,20 @@
-.App {
+*{
+  margin: 0
+}
+.app {
+  background-color: #b7babb;
+  height: 100vh;
+}
+
+.app_headerImage {
+  background-color: white;
+  padding: 20px;
+  border-bottom: 1px black;
+  object-fit: contain;
+  /*keep aspect ration */
+}
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +51,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
