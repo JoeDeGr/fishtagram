@@ -4,7 +4,7 @@ import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
 
 
-function Post({username, caption, imageURL}) {
+function Post({username, caption, imageUrl}) {
     // const {username, caption, imageURL} = props
     return (
         <div className="post">
@@ -15,7 +15,7 @@ function Post({username, caption, imageURL}) {
                 src="/static/images/avatar1.jpg"/>
                 <h3>{username}</h3>
             </div>
-            <img className="post_image" src={imageURL} alt={caption ? caption : "oops... Now where did that go?"}></img>
+            <img className="post_image" src={imageUrl} alt={caption ? caption : "oops... Now where did that go?"}></img>
             <h4 className="post_text"><strong>{username}:</strong> {caption}</h4>
         </div>
     )
