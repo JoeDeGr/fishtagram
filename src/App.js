@@ -1,5 +1,6 @@
 import React from 'react'
 import './App.css';
+import Post from './Post';
 
 function App() {
   return (
@@ -10,11 +11,12 @@ function App() {
           src=""
           alt="Logo Will Go Here." />
       </div>
-      <h1>Welcome to Fish ID!</h1>
+      <h1>Welcome to FishID.com!</h1>
+      <Post />
+      <Post/>
+      <Post/>
+      <Post/>
 
-      {/* Header */}
-      {/* Posts */}
-      {/* Posts */}
     </div>
   );
 }

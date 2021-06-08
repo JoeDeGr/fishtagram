@@ -3,6 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// import { createStore, applyMiddleware } from 'redux';
+// import { composeWithDevTools } from 'redux-devtools-extension';
+
+// const store = createStore(
+//   reducer,
+//   composeWithDevTools(
+//     applyMiddleware(...middleware)
+//     // other store enhancers if any
+//   )
+// );
 
 ReactDOM.render(
   <React.StrictMode>
