@@ -7,14 +7,15 @@ import Post from './Post';
 import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Button, Input } from '@material-ui/core';
+import ImageUpload from './ImageUpload'
 
-// function rand() {
-//   return Math.round(Math.random() * 20) - 10;
-// }
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50 + rand();
+  const left = 50 + rand();
 
   return {
     top: `${top}%`,
@@ -91,6 +92,11 @@ function App() {
 
   return (
     <div className="app">
+      {user?.displayName ? (<ImageUpload username={user.displayName}/>) 
+      : (
+        <h3>You Need To login to use all our features.</h3>
+      )}  
+      
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -170,7 +176,7 @@ function App() {
         )
       }
       
-      <h1>Welcome { user.displayName } to FishID.com!</h1>
+      <h1>Welcome to FishID.com!</h1>
 
       {
         posts.map(({id, post}) => (
