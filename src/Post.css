@@ -33,6 +33,13 @@
     margin-top: 10px;
 }
 
+.post_coments {
+    display: flex;
+    padding: 20px;
+    /* border-top: 20px black;
+    border-bottom: 1px grey; */
+}
+
 .post_input {
     flex: 1;
     border: none; 
@@ -51,7 +58,8 @@
     /* background: url();
     background-position: left top;
     background-repeat: repeat */
-
 }
+
+
 
 
