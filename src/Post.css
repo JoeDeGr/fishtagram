@@ -8,7 +8,6 @@
 .post_image {
     width: 100%;
     object-fit: contain;
-    /* {keep the aspect ration consistent} */
     border-top: 1px solid lightgrey;
     border-bottom: 1px solid black;
 
@@ -28,3 +27,31 @@
 .post_avatar{
     margin-right: 15px;
 }
+
+.post_commentBox {
+    display: flex;
+    margin-top: 10px;
+}
+
+.post_input {
+    flex: 1;
+    border: none; 
+    border-top: 1px solid darkgrey;
+    padding: 10px;
+    border-radius: 15px 25px 15px
+
+}
+.post_button {
+    flex: 0;
+    border-radius: 15px 25px 15px;
+    border: none; 
+    border-bottom: 1px solid lightgrey;
+    color: rgb(34, 34, 73);
+    /* color: rgb(59, 30, 30); */
+    /* background: url();
+    background-position: left top;
+    background-repeat: repeat */
+
+}
+
+

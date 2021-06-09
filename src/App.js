@@ -160,24 +160,28 @@ function App() {
           src={Logo1}
           alt="Logo Will Go Here." 
         />
-        { user ? (
-          <Button className="app_authButtons" onClick={() => auth.signOut()}>Logout</Button>
-          ) : (
-          <div className="app_loginContainer">
-            <Button className="app_authButtons" onClick={()=> setOpenSignIn(true)}>Log In</Button>
-            <Button className="app_authButtons" onClick={()=> setOpen(true)}>Sign Up</Button>
-          </div>    
-          )
-        }
+        <div className="app_auth">
+          { user ? (
+            <Button className="app_authButtons" onClick={() => auth.signOut()}>Logout</Button>
+            ) : (
+            <div className="app_loginContainer">
+              <Button className="app_authButtons" onClick={()=> setOpenSignIn(true)}>Log In</Button>
+              <Button className="app_authButtons" onClick={()=> setOpen(true)}>Sign Up</Button>
+            </div>    
+            )
+          }
+        </div>
       </div>
      
       <div className="app_welcome" >
         <h1> {(user?.displayName) ? (`Hey, ${user.displayName}!  Welcome Back to FishID.com!`) : ('Welcome to FishID.com')} </h1>
       </div>
       
-      
       <div className="app_posts">
-        { posts.map(({id, post}) => ( <Post key={id} username = {post.username} caption={post.caption} imageUrl={post.imageUrl}/> ))}
+        { posts.map(({id, post}) => ( 
+          <Post key={id} postId={id} username = {post.username} caption={post.caption} imageUrl={post.imageUrl}/> 
+          )
+        )}
       </div>
       
       {user?.displayName ? ( <ImageUpload username={user.displayName}/> ) : ( <h3>You Need To login to use all our features.</h3> )}
