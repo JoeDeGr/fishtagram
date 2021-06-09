@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './App.css';
 import Post from './Post';
-// import VinnyCarp from './images/VinnyCarp.jpg';
-// import JoeCarp from './images/JoeCarp.JPG'
-// import carpface from './images/carpface.JPG'
+import Logo1 from './images/Logo1.jpg';
+import Logo2 from './images/Logo2.jpg';
 import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Button, Input } from '@material-ui/core';
@@ -62,7 +61,7 @@ function App() {
   }, [user, username])
 
   useEffect(() => {
-    db.collection('posts').onSnapshot(snapshot => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc =>({
         id: doc.id,
         post: doc.data()
@@ -92,11 +91,6 @@ function App() {
 
   return (
     <div className="app">
-      {user?.displayName ? (<ImageUpload username={user.displayName}/>) 
-      : (
-        <h3>You Need To login to use all our features.</h3>
-      )}  
-      
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -106,7 +100,7 @@ function App() {
             <center>
               <img 
                 className="app_headerImage"
-                src=""
+                src={Logo2}
                 alt="Logo Goes Here... hmmm... Now, where did I put that darn logo?"
               />
             </center>
@@ -141,7 +135,7 @@ function App() {
             <center>
               <img 
                 className="app_headerImage"
-                src=""
+                src={Logo2}
                 alt="Logo Goes Here... hmmm... Now, where did I put that darn logo?"
               />
             </center>
@@ -161,28 +155,32 @@ function App() {
           </form>
         </div>
       </Modal>
-      <div classname='app_header' >
-        <img classname="app_headerImage"
-          src=""
-          alt="Logo Will Go Here." />
+      <div className='app_header' >
+        <img className="app_headerImage"
+          src={Logo1}
+          alt="Logo Will Go Here." 
+        />
+        { user ? (
+          <Button className="app_authButtons" onClick={() => auth.signOut()}>Logout</Button>
+          ) : (
+          <div className="app_loginContainer">
+            <Button className="app_authButtons" onClick={()=> setOpenSignIn(true)}>Log In</Button>
+            <Button className="app_authButtons" onClick={()=> setOpen(true)}>Sign Up</Button>
+          </div>    
+          )
+        }
       </div>
-      { user ? (
-        <Button onClick={() => auth.signOut()}>Logout</Button>
-        ) : (
-        <div className="app_loginContainer">
-          <Button onClick={()=> setOpenSignIn(true)}>Log In</Button>
-          <Button onClick={()=> setOpen(true)}>Sign Up</Button>
-        </div>    
-        )
-      }
+     
+      <div className="app_welcome" >
+        <h1> {(user?.displayName) ? (`Hey, ${user.displayName}!  Welcome Back to FishID.com!`) : ('Welcome to FishID.com')} </h1>
+      </div>
       
-      <h1>Welcome to FishID.com!</h1>
-
-      {
-        posts.map(({id, post}) => (
-          <Post key={id} username = {post.username} caption={post.caption} imageUrl={post.imageUrl}/>
-        ))
-      }
+      
+      <div className="app_posts">
+        { posts.map(({id, post}) => ( <Post key={id} username = {post.username} caption={post.caption} imageUrl={post.imageUrl}/> ))}
+      </div>
+      
+      {user?.displayName ? ( <ImageUpload username={user.displayName}/> ) : ( <h3>You Need To login to use all our features.</h3> )}
 
     </div>
   );
