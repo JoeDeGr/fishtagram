@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css';
-import Post from './Post';
+import Post from './components/Post';
 import Logo1 from './images/Logo1.jpg';
 import Logo2 from './images/Logo2.jpg';
 import { db, auth } from './firebase';
@@ -57,7 +57,6 @@ function App() {
     return () => {
       unsubscribe();
     }
-
   }, [user, username])
 
   useEffect(() => {
