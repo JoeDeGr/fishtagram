@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './App.css';
 import Post from './components/Post';
+import Posts from './containers/Posts'
 import Logo1 from './images/Logo1.jpg';
 import Logo2 from './images/Logo2.jpg';
 import { db, auth } from './firebase';
@@ -177,10 +178,12 @@ function App() {
       </div>
       
       <div className="app_posts">
+        {/* <Posts posts={posts} user={user}></Posts> */}
         { posts.map(({id, post}) => ( 
           <Post key={id} postId={id} user={user} username = {post.username} caption={post.caption} imageUrl={post.imageUrl}/> 
           )
         )}
+        {console.log(posts)}
       </div>
       
       {user?.displayName ? ( <ImageUpload username={user.displayName}/> ) : ( <h3>You Need To login to use all our features.</h3> )}
